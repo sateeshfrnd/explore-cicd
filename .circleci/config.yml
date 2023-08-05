@@ -78,7 +78,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["52:51:20:e2:cb:7b:72:d9:3b:3e:ed:39:dc:e0:6e:2c"] # You can get this ID in the section where you registered the SSH Key
+          fingerprints: ["a0:76:7a:91:9a:ab:82:35:bf:fc:3b:11:aa:10:78:5d"] # You can get this ID in the section where you registered the SSH Key
       - run:
           name: Install Ansible
           command: apk add --update ansible
@@ -87,24 +87,7 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt main-remote.yml 
               
-  # Exercise: Config and Deployment
-  configure-infrastructure1: 
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints: ["52:51:20:e2:cb:7b:72:d9:3b:3e:ed:39:dc:e0:6e:2c"] # You can get this ID in the section where you registered the SSH Key
-      - run:
-          name: Install Ansible
-          command: |
-            # install the dependencies needed for your playbook
-            apk add --update ansible 
-      - run:
-          name: Configure server
-          command: |
-            ansible-playbook -i inventory.txt main-remote.yml
-      
+  
       
 
 # Orchestrate jobs using workflows

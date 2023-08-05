@@ -67,9 +67,28 @@ jobs:
               --template-file template.yml \
               --stack-name myStack \
               --region us-east-1
+
+  configure-infrastructure:
+    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/configuration-reference/#executor-job
+    docker:
+      - image: python:3.7-alpine3.11
+    # Add steps to the job
+    # See: https://circleci.com/docs/configuration-reference/#steps
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["52:51:20:e2:cb:7b:72:d9:3b:3e:ed:39:dc:e0:6e:2c"] # You can get this ID in the section where you registered the SSH Key
+      - run:
+          name: Install Ansible
+          command: apk add --update ansible
+      - run:
+          name: "create server"
+          command: |
+            ansible-playbook -i inventory.txt main-remote.yml 
               
   # Exercise: Config and Deployment
-  configure-infrastructure: 
+  configure-infrastructure1: 
     docker:
       - image: python:3.7-alpine3.11
     steps:

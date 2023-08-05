@@ -67,6 +67,25 @@ jobs:
               --template-file template.yml \
               --stack-name myStack \
               --region us-east-1
+              
+  # Exercise: Config and Deployment
+  configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["52:51:20:e2:cb:7b:72:d9:3b:3e:ed:39:dc:e0:6e:2c"] # You can get this ID in the section where you registered the SSH Key
+      - run:
+          name: Install Ansible
+          command: |
+            # install the dependencies needed for your playbook
+            apk add --update ansible 
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt main-remote.yml
+      
       
 
 # Orchestrate jobs using workflows
@@ -80,3 +99,4 @@ workflows:
           requires:
             - save-hello_world
       - create-infrastructure
+      - configure_infrastructure

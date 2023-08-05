@@ -99,7 +99,6 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt main-remote.yml --private-key udacity.pem
       - destroy_environment
-        when: on_fail
   
       
 

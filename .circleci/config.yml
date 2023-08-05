@@ -58,6 +58,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install tar
+          command: yum -y install tar gzip
+      - run:
           name: "create infra"
           command: |
             aws cloudformation deploy \
